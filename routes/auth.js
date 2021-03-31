@@ -5,10 +5,16 @@ const bcrypt = require('bcryptjs')
 const router = express.Router();
 const {JWT_SECRET}=require('../keys')
 const jwt = require('jsonwebtoken')
+const requireLogin = require('../middleware/reqireLogin')
 
-router.get('/', (req, res) => {
-    res.send("hello");
-});
+
+
+
+
+
+// router.get('/protected',requireLogin, (req, res) => {
+//     res.send("protected");
+// });
 
 //signup route
 router.post('/signup', (req, res) => {

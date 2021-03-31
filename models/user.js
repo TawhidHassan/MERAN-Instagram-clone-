@@ -24,4 +24,4 @@ const userSchema = new Schema({
 
 // Export Schema
 
-module.exports = Todo = mongoose.model('User', userSchema)
+module.exports = users = mongoose.model('User', userSchema)
