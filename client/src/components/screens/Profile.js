@@ -1,7 +1,23 @@
-import React from 'react'
+import React,{useEffect,useState,useContext} from 'react'
+import {UserContext} from '../../App'
+
 
 
 const Profile=()=>{
+    const {state,dispatch} = useContext(UserContext)
+    const [mypics,setPics] = useState([])
+    useEffect(()=>{
+        fetch('/mypost',{
+            headers:{
+                "Authorization":"Bearer "+localStorage.getItem("jwt")
+            }
+        }).then(res=>res.json())
+        .then(result=>{
+            console.log(result)
+            setPics(result.mypost)
+        })
+     },[])
+
     return(
         <div style={{maxWidth:"550px",margin:"0px auto"}}>
            <div style={{
@@ -22,12 +38,12 @@ const Profile=()=>{
                  
                </div>
                <div>
-                   <h4>"loading"</h4>
-                   <h5>loading"</h5>
+               <h4>{state?state.name:"loading"}</h4>
+                   <h5>{state?state.email:"loading"}</h5>
                    <div style={{display:"flex",justifyContent:"space-between",width:"108%"}}>
-                       <h6> posts</h6>
-                       <h6> followers</h6>
-                       <h6> following</h6>
+                       <h6>{mypics.length} posts</h6>
+                       <h6>33 followers</h6>
+                       <h6>33 following</h6>
                    </div>
 
                </div>
@@ -45,7 +61,11 @@ const Profile=()=>{
             </div>      
            <div className="gallery">
                {
-                   
+                   mypics.map(item=>{
+                       return(
+                        <img key={item._id} className="item" src={item.photo} alt={item.title}/>  
+                       )
+                   })
                }
 
            
