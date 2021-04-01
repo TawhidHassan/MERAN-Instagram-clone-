@@ -11,7 +11,7 @@ const path = require("path");
 // storage engine 
 
 const storage = multer.diskStorage({
-    destination: './upload/images',
+    destination: './public',
     filename: (req, file, cb) => {
         return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
     }
@@ -48,10 +48,12 @@ router.get('/mypost',requireLogin,(req,res)=>{
 })
 
 
+
 router.post("/upload", upload.single('file'), (req, res) => {
     
     res.json({
-        url: `http://localhost:5000/upload/images/${req.file.filename}`
+        url: `http://localhost:5000/public/${req.file.filename}`
+        // url: `/upload/images/${req.file.filename}`
     })
     // console.log(req.file)
     photoUrl=req.file.path;
