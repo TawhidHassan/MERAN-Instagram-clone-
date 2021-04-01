@@ -20,7 +20,11 @@ const postSchema=new mongoose.Schema({
     postedBy:{
         type:ObjectId,
         ref:"User"
-    }
+    },
+    comments:[{
+        text:String,
+        postedBy:{type:ObjectId,ref:"User"}
+    }],
 },{timestamps:true})
 
 module.exports = posts =mongoose.model("Post",postSchema)
