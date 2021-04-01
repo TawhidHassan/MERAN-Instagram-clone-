@@ -16,10 +16,11 @@ const postSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    likes:[{type:ObjectId,ref:"User"}],
     postedBy:{
         type:ObjectId,
         ref:"User"
     }
-})
+},{timestamps:true})
 
 module.exports = posts =mongoose.model("Post",postSchema)
