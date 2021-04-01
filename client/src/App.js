@@ -1,4 +1,4 @@
-import React, { Profiler } from 'react'
+import React,{useEffect,createContext,useReducer,useContext} from 'react'
 import NavBAr from './components/NavBar'
 import "./App.css"
 import {BrowserRouter,Route,Switch,useHistory} from 'react-router-dom'
@@ -7,28 +7,56 @@ import Profile from './components/screens/Profile'
 import Signup from './components/screens/Signup'
 import Login from './components/screens/Login'
 import CretePost from './components/screens/CreatePost'
-function App() {
-  return (
-    <BrowserRouter>
-      <NavBAr></NavBAr>
-      <Route exact path="/">
-        <Home></Home>
+import {reducer,initialState} from './reducers/userReducer'
+
+
+
+export const UserContext=createContext()
+
+const Routing = ()=>{
+  const history = useHistory()
+  const {state,dispatch} = useContext(UserContext)
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("user"))
+    if(user){
+      dispatch({type:"USER",payload:user})
+    }else{
+      if(!history.location.pathname.startsWith('/reset'))
+           history.push('/login')
+    }
+  },[])
+  return(
+    <Switch>
+      <Route exact path="/" >
+      <Home />
       </Route>
       <Route path="/login">
-        <Login></Login>
+        <Login />
       </Route>
       <Route path="/signup">
-        <Signup></Signup>
+        <Signup />
       </Route>
-      <Route path="/profile">
-        <Profile></Profile>
+      <Route exact path="/profile">
+        <Profile />
       </Route>
       <Route path="/create">
-        <CretePost></CretePost>
+        <CretePost/>
       </Route>
-
+      
+      
+    </Switch>
+  )
+}
+function App() {
+  const [state,dispatch] = useReducer(reducer,initialState)
+  return (
+    <UserContext.Provider value={{state,dispatch}}>
+    <BrowserRouter>
+      <NavBAr />
+      <Routing />
+      
     </BrowserRouter>
-   
+    </UserContext.Provider>
   );
 }
 
