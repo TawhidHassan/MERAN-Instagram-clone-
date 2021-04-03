@@ -7,7 +7,9 @@ const {JWT_SECRET}=require('../keys')
 const jwt = require('jsonwebtoken')
 const requireLogin = require('../middleware/reqireLogin')
 
-
+const nodemailer = require('nodemailer')
+const sendgridTransport = require('nodemailer-sendgrid-transport')
+const {SENDGRID_API,EMAIL} = require('../config/keys')
 
 
 
@@ -17,6 +19,13 @@ const requireLogin = require('../middleware/reqireLogin')
 // });
 
 //signup route
+
+const transporter = nodemailer.createTransport(sendgridTransport({
+    auth:{
+        api_key:SENDGRID_API
+    }
+}))
+
 router.post('/signup', (req, res) => {
     const {name,email,password} = req.body 
   if(!email || !password || !name){
