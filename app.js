@@ -16,7 +16,7 @@ app.use("/public",express.static("public"));
 
 app.use(require('./routes/auth'));
 app.use(require('./routes/post'));
-
+app.use(require('./routes/user'));
 
 
 

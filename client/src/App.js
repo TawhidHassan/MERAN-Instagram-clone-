@@ -7,6 +7,7 @@ import Profile from './components/screens/Profile'
 import Signup from './components/screens/Signup'
 import Login from './components/screens/Login'
 import CretePost from './components/screens/CreatePost'
+import UserProfile from './components/screens/UserProfile'
 import {reducer,initialState} from './reducers/userReducer'
 
 
@@ -42,7 +43,9 @@ const Routing = ()=>{
       <Route path="/create">
         <CretePost/>
       </Route>
-      
+      <Route path="/profile/:userid">
+        <UserProfile />
+      </Route>
       
     </Switch>
   )
